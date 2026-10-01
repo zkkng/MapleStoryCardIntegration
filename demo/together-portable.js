@@ -1,10 +1,18 @@
 import { createPlayerStage } from "./player/player.js";
 import { directoryResolver } from "./player/resolver.js";
 
+let stage;
+const resolvers = [];
+const status = document.getElementById("cardStatus"),
+  retry = document.getElementById("retryCards"),
+  controls = [...document.querySelectorAll(".pair-controls button, .pair-controls input")];
+for (const control of controls) control.disabled = true;
+retry.addEventListener("click", () => location.reload());
+async function start() {
 const panorama = document.getElementById("panorama"),
   slider = document.getElementById("turn"),
   motionButton = document.getElementById("motion");
-const stage = createPlayerStage({
+stage = createPlayerStage({
   root: panorama,
   budget: {
     maxDpr: 1.5,
@@ -13,9 +21,10 @@ const stage = createPlayerStage({
   },
   onDiagnostic: console.info,
 });
-const catalog = await fetch("./cards/cards.json").then((r) => r.json());
-const views = [],
-  resolvers = [];
+const response = await fetch("./cards/cards.json");
+if (!response.ok) throw new Error("Unable to load the card catalog");
+const catalog = await response.json();
+const views = [];
 let x = 0,
   y = 0,
   auto = false,
@@ -191,3 +200,14 @@ window.addEventListener(
 );
 window.portableCards = { stage, views, resolvers, turn, ready: true };
 turn(0, 0);
+}
+start().then(() => {
+  status.parentElement.hidden = true;
+  for (const control of controls) control.disabled = false;
+}).catch((error) => {
+  stage?.dispose();
+  for (const resolver of resolvers) resolver.dispose();
+  status.textContent = "The card artwork couldn't load. Check your connection and sign-in, then try again.";
+  retry.hidden = false;
+  console.error("Card demo failed to load", error);
+});

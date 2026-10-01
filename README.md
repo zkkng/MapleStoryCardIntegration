@@ -27,4 +27,6 @@ The resumed audit preserves the two existing content digests. Runtime fixes and 
 
 ## Companion format regression
 
+Private hosting requires a session-aware content loader. After staging, run the [private-demo regression](docs/private-demo-repair-2026-10-01.md) to verify authenticated artwork, rotation, touch and failed-load recovery on the real companion page.
+
 Run `node tools/verify-companions.mjs ../PortableCardAssets` to verify both external packages, pinned digests, separate layers, angle-only animation, feathered fireworks, water, star/petal effects and Kino frames. Artwork stays outside Git. The staged Studio includes per-layer mobile diagnostics, transparent GIF import and custom-colored flake controls.

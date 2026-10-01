@@ -1,4 +1,6 @@
 /* Host composition around the shared renderer, independent of card artwork. */
+.card-load-status { text-align: center; color: #d4bc94; }
+.pair-controls :disabled { opacity: 0.5; cursor: wait; }
 .panorama .night-card {
   z-index: 2;
 }
