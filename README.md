@@ -17,3 +17,10 @@ Artwork and `.dcard` files stay in an external content directory and Site hostin
 ## Access boundary
 
 The published companion demo is a static playground. Local editing/export cannot publish packs or create inventory in the collector system. A production integration must connect verified host identity and server permissions using the framework's `docs/access-and-identity.md`, and mount import/publishing APIs only behind that authority.
+
+
+## Audit regression workflow
+
+The framework's `docs/complex-cards/audit-2026-10-01.md` maps requirements to verified behavior and remaining gaps. Run its standalone synthetic suite independently of this integration. After `stage-presentation.mjs`, run the real companion, Studio, layered import, advanced media, program-isolation, library and parameterized resilience scripts against the local preview. The long profile is 900 seconds active plus 300 seconds idle. Keep reports/screenshots in the external QA directory; do not commit art.
+
+The resumed audit preserves the two existing content digests. Runtime fixes and Studio's optional two-face poster capture are delivered by staging from framework source; do not patch generated `dist/player` copies. Physical iPhone testing is still a separate qualification step.
