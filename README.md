@@ -23,3 +23,9 @@ The published companion demo is a static playground. Local editing/export cannot
 Run `node tools/verify-companions.mjs ../PortableCardAssets` against your external packages. The tool verifies pinned digests, layer separation and the companion format. Keep artwork outside Git.
 
 Private hosting requires a session-aware content loader. Configure the authenticated host and verify asset loading, interaction and failure recovery in your deployment.
+
+## Display quality
+
+Companion views request the standard texture tier. The host caps decoded texture edges at 1024 pixels on coarse-pointer devices and 1536 otherwise, with estimated stage budgets of 96 MiB and 192 MiB respectively. Canvas resolution separately follows native screen density up to 3 and pinch zoom up to 3, bounded by the framework's pixel, memory and hardware limits. These are configurable host choices in `demo/together-portable.js`; source detail and available memory still limit magnification. The library inspector also requests standard quality.
+
+Run `node tools/test-private-demo.mjs SITE_DIST PLAYWRIGHT_MODULE_PATH OUTPUT_DIRECTORY chromium` to check authenticated asset loading, interaction, density, zoom and recovery against staged external artwork. Substitute `webkit` for a WebKit engine check; the pinch assertion uses Chromium's emulation API. Desktop emulation does not measure physical iPhone GPU performance or thermal behavior. See the framework runtime guide for quality controls and diagnostics.

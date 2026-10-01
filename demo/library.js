@@ -43,7 +43,7 @@ async function inspect(load) {
     view = stage.mount(
       viewer,
       { resolver },
-      { quality: "lite", inputMode: "drag" },
+      { quality: "standard", inputMode: "drag" },
     );
     side = "front";
     document.getElementById("angle").value = "0";

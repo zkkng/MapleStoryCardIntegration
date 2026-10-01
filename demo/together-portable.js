@@ -15,7 +15,9 @@ const panorama = document.getElementById("panorama"),
 stage = createPlayerStage({
   root: panorama,
   budget: {
-    maxDpr: 1.5,
+    maxDpr: 3,
+    maxZoom: 3,
+    maxTextureEdge: matchMedia("(pointer:coarse)").matches ? 1024 : 1536,
     estimatedGpuBytes:
       (matchMedia("(pointer:coarse)").matches ? 96 : 192) * 1024 * 1024,
   },
@@ -48,7 +50,7 @@ for (const [index, which] of ["night", "day"].entries()) {
     document.getElementById(which === "night" ? "scene" : "dayScene"),
     { title: resolver.manifest.title, resolver },
     {
-      quality: matchMedia("(pointer:coarse)").matches ? "lite" : "standard",
+      quality: "standard",
       onEvent: (event) => {
         if (event.type === "fallback") console.warn(event);
       },

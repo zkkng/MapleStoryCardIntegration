@@ -47,6 +47,27 @@ try {
   assert.equal(await page.locator("#cardStatus").isVisible(), false);
   await mkdir(output, { recursive: true });
   const neutral = await page.screenshot({ path: path.join(output, `private-${engine}-neutral.png`) });
+  assert.equal(diagnostics.resolution.width, 1086, "Native DPR must be preserved");
+  assert.ok(diagnostics.textureBytes > 50 * 1024 * 1024, "Phone texture detail must exceed the old lite decode");
+  let zoomDiagnostics = null;
+  if (engine === "chromium") {
+    const cdp = await page.context().newCDPSession(page);
+    await cdp.send("Emulation.setPageScaleFactor", {pageScaleFactor:3});
+    await page.waitForFunction(() => window.portableCards.stage.diagnostics().resolution?.width >= 3200);
+    zoomDiagnostics = await page.evaluate(() => window.portableCards.stage.diagnostics());
+    assert.ok(zoomDiagnostics.estimatedGpuBytes <= zoomDiagnostics.limits.estimatedGpuBytes);
+    assert.equal(zoomDiagnostics.activeViews, 2);
+    await page.screenshot({path:path.join(output, `private-${engine}-zoom3.png`)});
+    await cdp.send("Emulation.setPageScaleFactor", {pageScaleFactor:1});
+    await page.waitForFunction(() => window.portableCards.stage.diagnostics().resolution?.width === 1086);
+    const original = await browser.newPage({viewport:{width:390,height:844},deviceScaleFactor:3,hasTouch:true,isMobile:true});
+    await original.goto(origin + "/together-original.html");
+    await original.waitForFunction(() => [...document.images].length > 5 && [...document.images].every(i=>i.complete));
+    const originalCdp=await original.context().newCDPSession(original);
+    await originalCdp.send("Emulation.setPageScaleFactor", {pageScaleFactor:3});
+    await original.screenshot({path:path.join(output,"original-zoom3.png")});
+    await original.close();
+  }
   await page.locator("#turn").press("End");
   assert.equal(await page.locator("#turnValue").textContent(), "11°");
   await page.waitForFunction(() => window.portableCards.stage.diagnostics().scheduledFrames === 0);
@@ -77,7 +98,7 @@ try {
   assert.equal(await failed.locator("#turn").isEnabled(), true);
   assert.deepEqual(errors, []);
   assert.ok(requests.some((r) => r.path.endsWith(".webp") && r.authenticated));
-  const report = { engine, browser: browser.version(), diagnostics, checks: ["anonymous denied", "both protected card packages rendered", "rotation visibly changes page", "reset", "touch input", "failure is visible", "retry recovers"], errors, note: "Desktop mobile emulation, not physical iPhone qualification." };
+  const report = { engine, browser: browser.version(), diagnostics, zoomDiagnostics, checks: ["anonymous denied", "both protected card packages rendered", "rotation visibly changes page", "reset", "touch input", "failure is visible", "retry recovers"], errors, note: "Desktop mobile emulation, not physical iPhone qualification." };
   await writeFile(path.join(output, `private-${engine}.json`), JSON.stringify(report, null, 2));
   console.log(JSON.stringify(report, null, 2));
 } finally {
