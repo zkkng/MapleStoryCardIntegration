@@ -1,0 +1,384 @@
+body {
+  background:
+    radial-gradient(ellipse at 80% 30%, #60474655, transparent 52%),
+    radial-gradient(ellipse at 15% 35%, #193d64aa, transparent 55%), #0b1120;
+}
+.together-layout {
+  max-width: 1120px;
+  margin: auto;
+  padding: 17px 28px 36px;
+}
+.pair-heading {
+  text-align: center;
+  font:
+    normal clamp(19px, 2.8vw, 30px)/1.2 Georgia,
+    serif;
+  letter-spacing: 0;
+  margin: 0 0 20px;
+  color: #f0dfc8;
+}
+.pair-heading em {
+  color: #f0bbab;
+  font-weight: 400;
+}
+.panorama-stage {
+  perspective: 1500px;
+  display: flex;
+  justify-content: center;
+  padding: 0 18px;
+}
+.panorama {
+  display: flex;
+  width: min(100%, calc((100vh - 265px) * 1.333333), 840px);
+  position: relative;
+  transform: rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));
+  transform-style: preserve-3d;
+  filter: drop-shadow(0 22px 24px #0009);
+  outline: none;
+  touch-action: pan-y;
+  cursor: grab;
+  gap: 0;
+  transition: gap 0.4s ease;
+}
+.panorama:active {
+  cursor: grabbing;
+}
+.panorama:focus-visible {
+  outline: 2px solid #eed1ae;
+  outline-offset: 10px;
+}
+.panorama.separated {
+  gap: 20px;
+}
+.panorama .night-card {
+  flex: 1;
+  min-width: 0;
+  transform: none;
+  box-shadow: none;
+  will-change: auto;
+  border-radius: 12px;
+}
+.panorama .scene,
+.panorama .card-finish,
+.panorama .card-lettering {
+  border-radius: 12px;
+}
+.panorama:not(.separated) #nightCard,
+.panorama:not(.separated) #nightCard .scene,
+.panorama:not(.separated) #nightCard .card-finish,
+.panorama:not(.separated) #nightCard .card-lettering {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+.panorama:not(.separated) #dayCard,
+.panorama:not(.separated) #dayCard .scene,
+.panorama:not(.separated) #dayCard .card-finish,
+.panorama:not(.separated) #dayCard .card-lettering {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+.panorama:not(.separated) #nightCard .card-finish {
+  border-right: 0;
+  box-shadow:
+    inset 5px 0 0 #091123a0,
+    inset 0 5px 0 #091123a0,
+    inset 0 -5px 0 #091123a0;
+}
+.panorama:not(.separated) #dayCard .card-finish {
+  border-left: 0;
+  box-shadow:
+    inset -5px 0 0 #60473a50,
+    inset 0 5px 0 #60473a50,
+    inset 0 -5px 0 #60473a50;
+}
+.panorama:not(.separated) .card-finish:before {
+  display: none;
+}
+.panorama .card-lettering {
+  padding: 16px 17px 11px;
+}
+.panorama .card-edition {
+  font-size: 7px;
+  letter-spacing: 0.14em;
+}
+.panorama .card-caption h2 {
+  font-size: clamp(11px, 1.9vw, 20px);
+  letter-spacing: 0.01em;
+}
+.day-card .scene {
+  background: #bce7f1;
+}
+.day-card .card-finish {
+  border-color: #f2d9b2;
+}
+.day-card .card-lettering {
+  background: linear-gradient(
+    180deg,
+    #74514e22,
+    transparent 13%,
+    transparent 92%,
+    #35503990
+  );
+}
+.day-card .card-edition {
+  color: #fff6dd;
+  text-shadow: 0 1px 3px #70454c;
+}
+.day-card .scene-plane > img {
+  filter: none;
+  transform: none;
+}
+.day-card .object-layer img {
+  filter: none;
+}
+.day-card .cloud-art {
+  position: absolute;
+  inset: -8%;
+  opacity: 0.94;
+  pointer-events: none;
+}
+.day-card .cloud-art img {
+  width: 100%;
+  height: 100%;
+  object-fit: fill;
+}
+.day-card .sun-catch {
+  position: absolute;
+  inset: 0;
+  mix-blend-mode: screen;
+  mask-image: radial-gradient(
+    ellipse 16% 11% at var(--sun-x, 75%) var(--sun-y, 18%),
+    #000 0%,
+    #0009 30%,
+    transparent 100%
+  );
+  pointer-events: none;
+}
+.day-card .gear-glint {
+  mix-blend-mode: screen;
+  mask-image: radial-gradient(
+    ellipse 9% 7% at var(--glint-x, 50%) var(--glint-y, 20%),
+    #000 10%,
+    #0008 35%,
+    transparent 100%
+  );
+  pointer-events: none;
+}
+.day-card .flower-catch {
+  position: absolute;
+  inset: 0;
+  mix-blend-mode: screen;
+  filter: brightness(1.7);
+  mask-image: linear-gradient(
+    115deg,
+    transparent calc(var(--flower-sweep) - 12%),
+    #0008 var(--flower-sweep),
+    transparent calc(var(--flower-sweep) + 15%)
+  );
+  pointer-events: none;
+}
+.pair-controls {
+  max-width: 690px;
+  margin: 18px auto 0;
+}
+.pair-controls .turn-control {
+  margin: 0 auto 8px;
+  max-width: 480px;
+}
+.pair-controls .action-row {
+  justify-content: center;
+  flex-wrap: wrap;
+  margin: 0;
+  gap: 10px 22px;
+}
+.pair-hint {
+  text-align: center;
+  font-size: 12px;
+  color: #a5aabc;
+  margin: 10px 0 16px;
+}
+.pair-details {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 24px;
+}
+.pair-details summary {
+  font-size: 12px;
+  padding: 10px 0;
+}
+.pair-details .layer-row {
+  font-size: 12px;
+}
+.pair-controls button {
+  font-size: 12px;
+}
+.panorama-stage[data-loading="true"] {
+  visibility: hidden;
+}
+@media (max-width: 650px) {
+  .together-layout {
+    padding: 20px 10px 30px;
+  }
+  .panorama-stage {
+    padding: 0 4px;
+  }
+  .panorama {
+    width: 100%;
+  }
+  .pair-heading {
+    font-size: 20px;
+    margin-bottom: 20px;
+  }
+  .panorama .card-lettering {
+    padding: 10px 9px 9px;
+  }
+  .panorama .card-edition {
+    font-size: 5px;
+  }
+  .panorama .card-caption h2 {
+    font-size: 12px;
+  }
+  .pair-controls {
+    padding: 0 12px;
+  }
+  .pair-details {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+  .topbar nav {
+    gap: 12px;
+    font-size: 11px;
+  }
+  .pair-hint {
+    font-size: 11px;
+  }
+  .panorama.separated {
+    gap: 8px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .panorama {
+    transition: none;
+  }
+}
+.day-card .scene-plane[data-layer="mountain"] > img {
+  transform: translateY(-0.98%) scaleX(-1);
+}
+.day-card .scene-plane[data-layer="trees"] > img {
+  transform: translateY(0.52%);
+}
+.day-card .scene-plane[data-layer="lake"] > img {
+  transform: translateY(9.45%);
+}
+.day-card .scene-plane[data-layer="flowers"] > img {
+  transform: translateY(-2.28%);
+}
+
+.panorama {
+  width: min(100%, 940px);
+}
+.day-card .cloud-art img {
+  position: absolute;
+  inset: 0;
+}
+
+.wind-petal {
+  position: absolute;
+  overflow: hidden;
+  pointer-events: none;
+  will-change: transform, left, top;
+  transform-origin: center;
+}
+.wind-petal img {
+  position: absolute;
+  max-width: none;
+  display: block;
+  filter: url(#petalAlpha);
+}
+.wind-petal img.petal-foil {
+  mix-blend-mode: screen;
+  filter: url(#petalAlpha) hue-rotate(var(--foil-hue)) saturate(2.5)
+    brightness(3.4);
+  opacity: var(--foil-light, 0.7);
+}
+.wind-petal img.petal-fleck {
+  mix-blend-mode: screen;
+  filter: url(#petalFlakes);
+  opacity: var(--foil-light, 0.7);
+}
+
+/* Small painted sprites: compositor movement and opacity, no live SVG noise. */
+.wind-petal {
+  will-change: transform;
+  contain: layout paint;
+}
+.wind-petal img,
+.wind-petal img.petal-foil {
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  filter: none;
+}
+.panorama {
+  filter: none;
+  will-change: transform;
+}
+.panorama .night-card {
+  box-shadow: 0 18px 28px #0006;
+}
+.mobile-effects .lake-reflections img {
+  filter: none !important;
+}
+.mobile-effects .star-catch {
+  filter: brightness(3.5);
+  will-change: opacity;
+}
+.mobile-effects .sun-catch {
+  filter: brightness(3) !important;
+}
+.mobile-effects .gear-glint {
+  filter: brightness(5) !important;
+}
+.mobile-effects .firework-layer .art-crop {
+  filter: none !important;
+}
+/* Predecoded painted poses switch discretely; no crossfade or rubber deformation. */
+.object-layer[data-layer="kino"] .art-crop[hidden] {
+  display: none;
+}
+/* Phone surfaces are bounded; baked bloom textures keep feathering without new masks. */
+.mobile-effects .firework-layer .mobile-bloom {
+  mask-image: none;
+  -webkit-mask-image: none;
+}
+.mobile-effects .scene-plane,
+.mobile-effects .object-layer,
+.mobile-effects .wind-petal {
+  will-change: auto;
+}
+.mobile-effects .wind-petal img.petal-foil {
+  mix-blend-mode: normal;
+}
+.mobile-effects .water-catch {
+  mask-image: linear-gradient(
+    112deg,
+    transparent 40%,
+    #0008 46%,
+    #000 50%,
+    #0006 54%,
+    transparent 62%
+  ) !important;
+  mask-size: 300% 100%;
+  mask-position: var(--sweep) 0;
+  will-change: auto;
+}
+.mobile-effects .flower-catch {
+  mask-image: linear-gradient(
+    115deg,
+    transparent 42%,
+    #0008 50%,
+    transparent 60%
+  );
+  mask-size: 300% 100%;
+  mask-position: var(--flower-sweep) 0;
+}

@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Card library · Maple Icons</title>
+    <style>
+      :root {
+        color-scheme: dark;
+        font-family: Georgia, serif;
+        background: #0c1524;
+        color: #f7ead8;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        padding: 32px max(20px, 5vw);
+      }
+      nav {
+        display: flex;
+        gap: 24px;
+        align-items: center;
+        flex-wrap: wrap;
+      }
+      a {
+        color: #eac49c;
+      }
+      h1 {
+        font-size: clamp(32px, 5vw, 58px);
+        font-weight: 400;
+        margin-bottom: 12px;
+      }
+      p {
+        color: #b7c3d4;
+        line-height: 1.6;
+      }
+      #cards {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(160px, 320px));
+        gap: 28px;
+        margin-top: 35px;
+      }
+      .dc-card {
+        border: 1px solid #b89a70;
+        border-radius: 18px;
+        cursor: pointer;
+        background: #14233b;
+      }
+      .dc-card-title {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        text-align: center;
+        padding: 18px 10px;
+        background: linear-gradient(transparent, #07121ee6);
+        font-size: 20px;
+      }
+      button {
+        border: 1px solid #8d795f;
+        border-radius: 10px;
+        padding: 11px 18px;
+        background: #172338;
+        color: #f3dfc3;
+        cursor: pointer;
+        font: inherit;
+      }
+      button:focus-visible,
+      .dc-card:focus-visible {
+        outline: 3px solid #f7cc85;
+        outline-offset: 4px;
+      }
+      dialog {
+        background: #0b1525;
+        border: 1px solid #927e62;
+        border-radius: 20px;
+        color: inherit;
+        padding: 18px;
+        max-height: 96vh;
+        max-width: 95vw;
+      }
+      dialog::backdrop {
+        background: #030812df;
+      }
+      #viewer {
+        position: relative;
+        width: min(450px, 78vw);
+        height: min(675px, 76vh);
+      }
+      .controls {
+        display: flex;
+        justify-content: space-between;
+        gap: 12px;
+        margin-bottom: 12px;
+      }
+      #message {
+        min-height: 24px;
+      }
+      input[type="range"] {
+        width: 100%;
+      }
+    </style>
+  </head>
+  <body>
+    <nav>
+      <strong>MAPLE ICONS</strong><a href="./together.html">Companion pair</a
+      ><a href="./studio.html">Card studio</a
+      ><button id="open">Open a card file</button>
+    </nav>
+    <h1>Two stories. One sky.</h1>
+    <p>
+      Inspect either companion, turn it in your hands, or open a portable card
+      of your own.
+    </p>
+    <div id="cards"></div>
+    <p id="message" role="status"></p>
+    <dialog id="inspect">
+      <div class="controls">
+        <button id="flip">Flip card</button><button id="close">Close</button>
+      </div>
+      <div id="viewer"></div>
+      <label
+        >Turn the card<input
+          id="angle"
+          type="range"
+          min="-100"
+          max="100"
+          value="0"
+      /></label>
+    </dialog>
+    <script type="module" src="./library.js"></script>
+  </body>
+</html>

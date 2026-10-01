@@ -1,9 +1,19 @@
 # MapleStory Card Integration
 
-Separate host integration for the Digital Card Framework.
+Maple-specific companion artwork migration and demo composition for [DigitalCardFramework](https://github.com/zkkng/DigitalCardFramework). Portable contract 0.1.0. This repository contains code/configuration only: no art, sprite sheets, game files or credentials.
 
-This repository currently records boundaries; no server bridge or runtime integration has been copied or implemented here. Consume versioned framework interfaces for authentication, eligibility, NX, optional reward delivery and deployment wiring. Do not duplicate the generic pack, ownership, album or trading implementation.
+## Tools
 
-Artwork, sprites, game files, credentials and production data remain outside this repository. GitHub destination is pending the owner's account/repository selection.
+Keep the framework checkout as a sibling `DigitalCardFramework`, install its pinned optional presentation dependencies, and provide your own approved artwork outside Git.
 
-Customization is required during integration. The website owns its page layout, navigation and mount locations. Consume the framework's documented headless commands, configurable UI and replacement slots; do not edit its internals to place the opener or rearrange results. Follow the framework's `docs/customization-architecture.md` and include an alternative host layout as an integration acceptance example.
+1. `node tools/migrate-companions.mjs DEMO_DIST EXTERNAL_OUTPUT SHARP_MODULE_PATH` converts the approved night/day layers into portable bundles. Requires Sharp 0.35.4. This initial conversion does not replace the final renderer-captured posters.
+2. `node tools/stage-presentation.mjs EXTERNAL_OUTPUT SITE_DIST` copies the generic runtime, bundles optional adapters/import workers, stages the host composition, and copies external packages selected by `cards.json`.
+3. Serve the Site output locally. `node tools/finalize-companions.mjs PLAYWRIGHT_MODULE_PATH SHARP_MODULE_PATH EXTERNAL_OUTPUT PREVIEW_URL` captures the actual renderer into face posters and finalizes immutable content-addressed directories. Requires Playwright with Edge installed. Stage once more afterward.
+
+`demo/` holds the host page shell, layout and public-player wiring. `together.html` displays the companions; `library.html` proves a different poster-grid/inspector composition; `studio.html` opens the generic editor. They use the same card bundles. Existing demo navigation expects the surrounding Maple demo routes. `stage-presentation` builds from source; do not edit generated `player/` copies.
+
+Artwork and `.dcard` files stay in an external content directory and Site hosting. The host's original bespoke page is preserved separately when the migrated page replaces it. Game authentication, NX wallets, reward redemption and a live Maple server bridge are not implemented by these art migration tools.
+
+## Access boundary
+
+The published companion demo is a static playground. Local editing/export cannot publish packs or create inventory in the collector system. A production integration must connect verified host identity and server permissions using the framework's `docs/access-and-identity.md`, and mount import/publishing APIs only behind that authority.

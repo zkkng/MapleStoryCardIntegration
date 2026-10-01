@@ -1,0 +1,681 @@
+:root {
+  color-scheme: dark;
+  --ink: #f3e9d8;
+  --muted: #a9b1c8;
+  --gold: #e6c793;
+  --border: rgba(214, 198, 165, 0.18);
+}
+* {
+  box-sizing: border-box;
+}
+body {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+  background: radial-gradient(
+    ellipse at 29% 40%,
+    #152b4b 0%,
+    #0a142a 35%,
+    #070c1c 73%
+  );
+  color: var(--ink);
+  font:
+    16px/1.5 Arial,
+    Helvetica,
+    sans-serif;
+  overflow-x: hidden;
+}
+button,
+input {
+  font: inherit;
+}
+a {
+  color: inherit;
+  text-decoration: none;
+}
+button,
+a,
+input,
+summary {
+  -webkit-tap-highlight-color: transparent;
+}
+button:focus-visible,
+a:focus-visible,
+summary:focus-visible,
+input:focus-visible,
+.night-card:focus-visible {
+  outline: 2px solid #f5dca9;
+  outline-offset: 5px;
+}
+button {
+  cursor: pointer;
+}
+.topbar {
+  position: relative;
+  z-index: 2;
+  max-width: 1440px;
+  margin: auto;
+  padding: 24px 5%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid rgba(211, 210, 223, 0.07);
+}
+.wordmark {
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.2em;
+  color: #ecd5aa;
+  white-space: nowrap;
+}
+.wordmark span {
+  font-size: 24px;
+  vertical-align: -3px;
+  margin-right: 9px;
+}
+.topbar nav {
+  display: flex;
+  gap: 28px;
+  color: #a5aec4;
+  font-size: 13px;
+}
+.topbar nav a:hover {
+  color: #f0d8a9;
+}
+.night-layout {
+  position: relative;
+  max-width: 1230px;
+  margin: auto;
+  min-height: calc(100vh - 82px);
+  display: grid;
+  grid-template-columns: minmax(0, 1.25fr) minmax(280px, 0.75fr);
+  align-items: center;
+  gap: clamp(45px, 7vw, 110px);
+  padding: 30px 5% 34px;
+}
+.card-stage {
+  position: relative;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  min-width: 0;
+  isolation: isolate;
+}
+.stage-halo {
+  position: absolute;
+  z-index: -1;
+  width: 110%;
+  height: 90%;
+  top: 5%;
+  background: radial-gradient(
+    ellipse at 55% 30%,
+    rgba(133, 71, 132, 0.17),
+    rgba(72, 146, 197, 0.16) 45%,
+    transparent 70%
+  );
+  filter: blur(32px);
+  pointer-events: none;
+}
+.card-holder {
+  perspective: 1300px;
+  width: min(100%, 430px);
+  padding: 0 2px;
+}
+.night-card {
+  --rx: 0deg;
+  --ry: 0deg;
+  position: relative;
+  width: 100%;
+  aspect-ratio: 2/3;
+  transform: rotateX(var(--rx)) rotateY(var(--ry));
+  transform-style: preserve-3d;
+  border-radius: 19px;
+  outline: none;
+  box-shadow:
+    0 32px 65px #0009,
+    0 5px 12px #0009,
+    0 0 0 1px #cab78280;
+  cursor: grab;
+  touch-action: pan-y;
+  will-change: transform;
+}
+.night-card:active {
+  cursor: grabbing;
+}
+.scene {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  isolation: isolate;
+  border-radius: 19px;
+  background: #081536;
+}
+.scene-plane {
+  position: absolute;
+  inset: -3%;
+  pointer-events: none;
+  will-change: transform;
+}
+.scene-plane > img {
+  width: 100%;
+  height: 100%;
+  object-fit: fill;
+  display: block;
+}
+.scene-plane[hidden] {
+  display: none;
+}
+.object-layer {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  will-change: transform;
+}
+.object-layer[hidden] {
+  display: none;
+}
+.art-crop {
+  position: absolute;
+  overflow: visible;
+}
+.art-crop img {
+  position: absolute;
+  display: block;
+  max-width: none;
+}
+.firework-layer .art-crop {
+  mix-blend-mode: screen;
+  transform-origin: 50% 50%;
+  will-change: transform, opacity;
+  filter: drop-shadow(0 0 4px #ffefc722);
+}
+.lake-reflections {
+  position: absolute;
+  inset: -3%;
+  mask-image: url("./night-art/lake.png");
+  mask-size: 100% 100%;
+  mask-repeat: no-repeat;
+  pointer-events: none;
+  opacity: 0.21;
+  mix-blend-mode: screen;
+  will-change: transform;
+}
+.lake-reflections img {
+  position: absolute;
+  object-fit: fill;
+  filter: url(#waterRipple) blur(0.45px);
+  transform: scaleY(-1);
+  width: 23%;
+  height: 10%;
+  left: 58%;
+  top: 68%;
+}
+.lake-reflections img:nth-child(2) {
+  left: 36%;
+  top: 72%;
+  width: 19%;
+  height: 10%;
+}
+.lake-reflections img:nth-child(3) {
+  left: 77%;
+  top: 67%;
+  width: 12%;
+  height: 8%;
+}
+.card-finish {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  border: 1px solid #e4cca0;
+  border-radius: 19px;
+  box-shadow:
+    inset 0 0 0 5px #091123d9,
+    inset 0 0 0 6px #d9c08799,
+    inset 0 0 35px #03091640;
+}
+.card-finish:before {
+  content: "";
+  position: absolute;
+  inset: 13px;
+  border: 1px solid #f1d39a33;
+  border-radius: 10px;
+}
+.card-lettering {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 20px 22px 15px;
+  border-radius: 19px;
+  background: linear-gradient(
+    180deg,
+    #030d254d,
+    transparent 13%,
+    transparent 91%,
+    #030816d9
+  );
+}
+.card-edition {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 8px;
+  letter-spacing: 0.18em;
+  font-weight: 800;
+  text-shadow: 0 1px 5px #040c20;
+  color: #f4deb7;
+}
+.card-caption {
+  text-align: center;
+  text-shadow: 0 2px 8px #020c16;
+}
+.card-caption h2 {
+  font:
+    normal 24px/1.06 Georgia,
+    serif;
+  margin: 5px 0 4px;
+  letter-spacing: 0.01em;
+  color: #fff3d8;
+}
+.card-category {
+  font-size: 7px;
+  font-weight: 700;
+  letter-spacing: 0.26em;
+  color: #d8c9ab;
+}
+.card-caption-rule {
+  display: block;
+  width: 28px;
+  height: 1px;
+  background: #e5c996;
+  margin: auto;
+  opacity: 0.7;
+}
+.card-instruction {
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  color: #8698b6;
+  margin: 24px 0 0;
+}
+.controls-panel {
+  max-width: 360px;
+  padding-bottom: 12px;
+}
+.eyebrow {
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  font-weight: 800;
+  color: #c8b695;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+.eyebrow span {
+  font-size: 13px;
+  color: #e8c685;
+}
+h1 {
+  font:
+    normal clamp(43px, 4.5vw, 65px)/1.03 Georgia,
+    serif;
+  letter-spacing: -0.035em;
+  margin: 21px 0 20px;
+}
+h1 em {
+  color: #e3c796;
+  font-weight: 400;
+}
+.scene-copy {
+  font:
+    17px/1.65 Georgia,
+    serif;
+  color: #afb9cd;
+  margin: 0 0 23px;
+}
+.companions {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: #c6d0e0;
+  padding-bottom: 26px;
+  border-bottom: 1px solid var(--border);
+}
+.companions i {
+  font-style: normal;
+  font-size: 8px;
+  color: #bda577;
+}
+.turn-control {
+  margin: 27px 0 18px;
+}
+.turn-control label {
+  display: flex;
+  justify-content: space-between;
+  font-size: 13px;
+  color: #d4cbbd;
+}
+.turn-control label span {
+  font-size: 12px;
+  color: #899ab5;
+  font-variant-numeric: tabular-nums;
+}
+input[type="range"] {
+  width: 100%;
+  height: 24px;
+  margin: 9px 0 0;
+  accent-color: #e3c390;
+  cursor: ew-resize;
+}
+.action-row {
+  display: flex;
+  gap: 14px;
+  align-items: center;
+  margin-bottom: 27px;
+}
+.action-row button {
+  border: 1px solid #d5bd8c66;
+  background: #b19d7220;
+  color: #ecd5ae;
+  padding: 10px 13px;
+  border-radius: 5px;
+  font-size: 13px;
+  white-space: nowrap;
+}
+.action-row button:hover {
+  border-color: #ecd5ae;
+  background: #b19d722b;
+}
+.action-row .quiet-button {
+  border: 0;
+  background: transparent;
+  color: #929fb8;
+  padding: 10px 0;
+}
+.button-icon {
+  display: inline-block;
+  width: 16px;
+  font-size: 11px;
+  font-weight: 800;
+}
+.layer-inspector,
+.outfit {
+  border-top: 1px solid var(--border);
+}
+summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  list-style: none;
+  font-size: 14px;
+  color: #d1c8ba;
+  padding: 15px 0;
+  cursor: pointer;
+}
+summary::-webkit-details-marker {
+  display: none;
+}
+summary span {
+  color: #bdab8e;
+  font-size: 18px;
+  line-height: 1;
+}
+details[open] > summary span {
+  transform: rotate(45deg);
+}
+.layer-inspector > p {
+  font-size: 12px;
+  color: #8e9bb2;
+  margin: 0 0 10px;
+}
+.layer-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 8px 0;
+  font-size: 13px;
+  color: #aab7ca;
+}
+.layer-row label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+}
+.layer-row input {
+  accent-color: #dec59b;
+}
+.layer-row small {
+  font-size: 11px;
+  color: #6e839f;
+  font-variant-numeric: tabular-nums;
+}
+.outfit ul {
+  font-size: 13px;
+  color: #aab7ca;
+  line-height: 1.7;
+  padding-left: 18px;
+  margin: 0 0 18px;
+}
+.study-note {
+  border-top: 1px solid var(--border);
+  padding-top: 17px;
+  font:
+    12px/1.65 Arial,
+    sans-serif;
+  color: #7789a6;
+  margin: 0;
+}
+.filter-defs {
+  position: absolute;
+  width: 0;
+  height: 0;
+  overflow: hidden;
+}
+@media (min-width: 1100px) and (max-height: 850px) {
+  .card-holder {
+    max-width: 365px;
+  }
+  .night-layout {
+    padding-top: 24px;
+    gap: 75px;
+  }
+  .controls-panel {
+    max-width: 350px;
+  }
+  h1 {
+    font-size: 53px;
+    margin: 16px 0;
+  }
+  .scene-copy {
+    font-size: 16px;
+    margin-bottom: 17px;
+  }
+  .companions {
+    padding-bottom: 19px;
+  }
+  .turn-control {
+    margin-top: 20px;
+  }
+  .action-row {
+    margin-bottom: 20px;
+  }
+}
+@media (max-width: 850px) {
+  .night-layout {
+    grid-template-columns: 1fr;
+    gap: 36px;
+    max-width: 600px;
+    padding: 33px 25px 60px;
+  }
+  .card-holder {
+    max-width: 420px;
+  }
+  .controls-panel {
+    max-width: 420px;
+    width: 100%;
+    margin: auto;
+  }
+  .controls-panel h1 {
+    font-size: 44px;
+  }
+  .scene-copy {
+    font-size: 16px;
+  }
+  .eyebrow {
+    font-size: 10px;
+  }
+  .topbar {
+    padding: 19px 23px;
+  }
+  .topbar nav {
+    font-size: 12px;
+    gap: 17px;
+  }
+  .wordmark {
+    font-size: 10px;
+    letter-spacing: 0.14em;
+  }
+  .wordmark span {
+    font-size: 20px;
+  }
+  .card-instruction {
+    margin-top: 19px;
+  }
+  .controls-panel h1 br {
+    display: none;
+  }
+  .controls-panel h1 em {
+    white-space: nowrap;
+  }
+}
+@media (max-width: 450px) {
+  .topbar {
+    padding: 17px;
+  }
+  .topbar nav a:last-child {
+    display: none;
+  }
+  .night-layout {
+    padding: 25px 21px 45px;
+  }
+  .card-lettering {
+    padding: 18px 18px 13px;
+  }
+  .card-caption h2 {
+    font-size: 20px;
+  }
+  .card-edition {
+    font-size: 6px;
+  }
+  .card-category {
+    font-size: 6px;
+  }
+  .night-card,
+  .scene,
+  .card-finish,
+  .card-lettering {
+    border-radius: 15px;
+  }
+  .controls-panel h1 {
+    font-size: 40px;
+  }
+  .card-instruction {
+    font-size: 11px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  * {
+    scroll-behavior: auto !important;
+  }
+  .scene-plane,
+  .object-layer,
+  .night-card {
+    will-change: auto;
+  }
+}
+/* Placement follows the clean-plate source geometry; only the water needs a horizon offset. */
+.scene-plane[data-layer="lake"] > img {
+  transform: translateY(7.487%);
+}
+.object-layer[data-layer="player"] .art-crop {
+  transform: scaleX(-1);
+}
+.object-layer[data-layer="player"] img,
+.object-layer[data-layer="kino"] img,
+.object-layer[data-layer="husky"] img {
+  filter: brightness(0.88) drop-shadow(0 3px 2px #04102155);
+}
+.scene-plane[data-layer="mountain"] > img {
+  filter: brightness(0.73) saturate(0.85);
+}
+.scene-plane[data-layer="trees"] > img {
+  filter: brightness(0.65) saturate(0.85);
+}
+.scene-plane[data-layer="lake"] > img {
+  filter: brightness(0.72) saturate(0.85);
+}
+.scene-plane[data-layer="grass"] > img {
+  filter: brightness(0.77);
+}
+.card-lettering {
+  padding-bottom: 14px;
+}
+.card-caption h2 {
+  font-size: 18px;
+  margin: 0;
+  letter-spacing: 0.025em;
+}
+.card-category,
+.card-caption-rule {
+  display: none;
+}
+@media (max-width: 850px) {
+  .controls-panel h1 em {
+    margin-left: 0.18em;
+  }
+}
+/* Angle-driven material responses: all masks are local to the painted layer. */
+.firework-layer .art-crop {
+  mask-image: radial-gradient(
+    circle at var(--burst-x) var(--burst-y),
+    #000 max(0%, calc(var(--bloom-radius, 130%) - 28%)),
+    #000b max(0%, calc(var(--bloom-radius, 130%) - 17%)),
+    #0003 max(0%, calc(var(--bloom-radius, 130%) - 7%)),
+    transparent var(--bloom-radius, 130%)
+  );
+  mask-repeat: no-repeat;
+}
+.scene-plane > img.star-catch {
+  position: absolute;
+  inset: 0;
+  mask-image: radial-gradient(
+    ellipse 2.2% 1.45% at var(--star-x) var(--star-y),
+    #000 0%,
+    #000 25%,
+    transparent 100%
+  );
+  will-change: filter;
+}
+.scene-plane[data-layer="lake"] > img.water-catch {
+  position: absolute;
+  inset: 0;
+  mix-blend-mode: screen;
+  filter: brightness(3) contrast(1.35);
+  mask-image: linear-gradient(
+    112deg,
+    transparent calc(var(--sweep) - 19%),
+    #0008 calc(var(--sweep) - 6%),
+    #000 var(--sweep),
+    #0006 calc(var(--sweep) + 7%),
+    transparent calc(var(--sweep) + 22%)
+  );
+  will-change: mask-image, opacity;
+  pointer-events: none;
+}

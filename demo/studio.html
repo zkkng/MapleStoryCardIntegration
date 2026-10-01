@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Card studio · Maple Icons</title>
+    <link rel="stylesheet" href="./player/studio.css" />
+  </head>
+  <body style="margin: 0">
+    <main id="studio"></main>
+    <script type="module">
+      import { mountStudio } from "./player/studio.js";
+      import { importPackage } from "./player/package.js";
+      const root = document.getElementById("studio");
+      root.textContent = "Loading the card studio…";
+      try {
+        const response = await fetch("./cards/day.dcard");
+        if (!response.ok) throw new Error("Unable to load the example card");
+        const pkg = await importPackage(
+          new Uint8Array(await response.arrayBuffer()),
+        );
+        root.replaceChildren();
+        window.cardStudio = mountStudio(root, { initialPackage: pkg });
+        await window.cardStudio.ready;
+      } catch (error) {
+        root.textContent = error.message;
+        console.error(error);
+      }
+    </script>
+  </body>
+</html>

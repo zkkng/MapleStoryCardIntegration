@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="theme-color" content="#11172a" />
+    <meta
+      name="description"
+      content="Under the Same Sky, Thinking of You. Two layered MapleStory cards, one shared lakeside moment."
+    />
+    <title>Under the Same Sky, Thinking of You · Maple Icons</title>
+    <link
+      rel="icon"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%2311172a'/%3E%3Cpath d='M16 27C-4 13 7 2 16 11C25 2 36 13 16 27' fill='%23f1c6b6'/%3E%3C/svg%3E"
+    />
+    <link rel="stylesheet" href="./night.css" />
+    <link rel="stylesheet" href="./together.css" />
+    <link rel="stylesheet" href="./portable.css" />
+    <script type="module" src="./together-portable.js"></script>
+  </head>
+  <body>
+    <header class="topbar">
+      <a class="wordmark" href="./index.html"><span>✦</span> MAPLE ICONS</a>
+      <nav>
+        <a href="./night.html">The night card</a
+        ><a href="./effects.html">Material studies</a>
+      </nav>
+    </header>
+    <main class="together-layout">
+      <h1 class="pair-heading">
+        Under the Same Sky, <em>Thinking of You.</em>
+      </h1>
+      <section
+        class="panorama-stage"
+        aria-label="Two connected MapleStory art cards"
+      >
+        <div
+          id="panorama"
+          class="panorama separated"
+          tabindex="0"
+          role="group"
+          aria-label="Turn both cards with arrow keys, drag, or use the slider below."
+        >
+          <article
+            id="nightCard"
+            class="night-card"
+            aria-label="Under the Same Sky: a player and his pets by a moonlit lake"
+          >
+            <div id="scene" class="scene"></div>
+            <div class="card-finish" aria-hidden="true"></div>
+            <div class="card-lettering">
+              <div class="card-edition">
+                <span>MAPLE ICONS</span><span>01 / NIGHT</span>
+              </div>
+              <div class="card-caption"><h2>Under the Same Sky</h2></div>
+            </div>
+          </article>
+          <article
+            id="dayCard"
+            class="night-card day-card"
+            aria-label="Thinking of You: a lady in a sunlit flower field, facing toward the night card"
+          >
+            <div id="dayScene" class="scene"></div>
+            <div class="card-finish" aria-hidden="true"></div>
+            <div class="card-lettering">
+              <div class="card-edition">
+                <span>MAPLE ICONS</span><span>02 / DAY</span>
+              </div>
+              <div class="card-caption"><h2>Thinking of You</h2></div>
+            </div>
+          </article>
+        </div>
+      </section>
+      <section class="pair-controls" aria-label="Card controls">
+        <div class="turn-control">
+          <label for="turn">Turn together <span id="turnValue">0°</span></label
+          ><input
+            id="turn"
+            type="range"
+            min="-100"
+            max="100"
+            value="0"
+            aria-label="Turn both cards"
+          />
+        </div>
+        <div class="action-row">
+          <button id="motion" type="button" aria-pressed="false">
+            Gentle motion</button
+          ><button id="reset" class="quiet-button" type="button">
+            Reset view</button
+          ><button
+            id="separate"
+            class="quiet-button"
+            type="button"
+            aria-pressed="true"
+          >
+            Join cards
+          </button>
+        </div>
+        <p class="pair-hint">
+          Move slowly. Fireworks bloom, petals catch the breeze, and sunlight
+          sweeps the water.
+        </p>
+        <div class="pair-details">
+          <details class="layer-inspector">
+            <summary>Night layers <span>+</span></summary>
+            <div id="layerList"></div>
+          </details>
+          <details class="layer-inspector">
+            <summary>Day layers <span>+</span></summary>
+            <div id="dayLayerList"></div>
+          </details>
+          <details class="outfit">
+            <summary>Her MapleStory outfit <span>+</span></summary>
+            <ul id="dayOutfit"></ul>
+          </details>
+        </div>
+      </section>
+    </main>
+    <svg class="filter-defs" aria-hidden="true">
+      <defs>
+        <filter id="waterRipple" x="-20%" y="-20%" width="140%" height="140%">
+          <feTurbulence
+            type="fractalNoise"
+            baseFrequency=".008 .15"
+            numOctaves="1"
+            seed="8"
+            result="noise"
+          />
+          <feDisplacementMap
+            in="SourceGraphic"
+            in2="noise"
+            scale="13"
+            xChannelSelector="R"
+            yChannelSelector="G"
+          />
+        </filter>
+        <filter id="petalAlpha" color-interpolation-filters="sRGB">
+          <feComponentTransfer>
+            <feFuncA type="gamma" amplitude="1" exponent="2.4" offset="0" />
+          </feComponentTransfer>
+        </filter>
+        <filter id="petalFlakes" color-interpolation-filters="sRGB">
+          <feTurbulence
+            type="fractalNoise"
+            baseFrequency=".11"
+            numOctaves="1"
+            seed="19"
+            result="grain"
+          />
+          <feColorMatrix
+            in="grain"
+            type="matrix"
+            values="0 0 0 0 1 0 0 0 0 0.94 0 0 0 0 0.75 5 0 0 0 -2.8"
+            result="flakes"
+          />
+          <feComponentTransfer in="SourceAlpha" result="petalShape">
+            <feFuncA type="gamma" amplitude="1" exponent="3" offset="0" />
+          </feComponentTransfer>
+          <feComposite in="flakes" in2="petalShape" operator="in" />
+        </filter>
+      </defs>
+    </svg>
+  </body>
+</html>

@@ -1,0 +1,13 @@
+/* Host composition around the shared renderer, independent of card artwork. */
+.panorama .night-card {
+  z-index: 2;
+}
+.panorama .scene {
+  background: transparent;
+}
+.pair-controls a.quiet-button {
+  font-size: 13px;
+  color: #d4bc94;
+  text-decoration: none;
+  padding: 8px 12px;
+}
