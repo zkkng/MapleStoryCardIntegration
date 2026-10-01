@@ -24,3 +24,7 @@ The published companion demo is a static playground. Local editing/export cannot
 The framework's `docs/complex-cards/audit-2026-10-01.md` maps requirements to verified behavior and remaining gaps. Run its standalone synthetic suite independently of this integration. After `stage-presentation.mjs`, run the real companion, Studio, layered import, advanced media, program-isolation, library and parameterized resilience scripts against the local preview. The long profile is 900 seconds active plus 300 seconds idle. Keep reports/screenshots in the external QA directory; do not commit art.
 
 The resumed audit preserves the two existing content digests. Runtime fixes and Studio's optional two-face poster capture are delivered by staging from framework source; do not patch generated `dist/player` copies. Physical iPhone testing is still a separate qualification step.
+
+## Companion format regression
+
+Run `node tools/verify-companions.mjs ../PortableCardAssets` to verify both external packages, pinned digests, separate layers, angle-only animation, feathered fireworks, water, star/petal effects and Kino frames. Artwork stays outside Git. The staged Studio includes per-layer mobile diagnostics, transparent GIF import and custom-colored flake controls.

@@ -20,10 +20,12 @@ for (const name of await readdir(framework)) {
       ![
         "compiler.js",
         "service.js",
+        "node-http.js",
         "import-worker.js",
         "identity.js",
         "adapters.js",
         "layered-source.js",
+        "gif-source.js",
         "layered-worker.js",
       ].includes(name)) ||
     name.endsWith(".css")
