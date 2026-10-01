@@ -1,5 +1,7 @@
 # Private companion demo repair
 
+Tested code pair: framework `299b88a9881303f0dd6c372739f3f63c1cf91440`, integration `3262f2aa62dc7e3e261106884878af018134d1db`. This revision adds only the compatibility record to that tested code.
+
 The published page's card loader omitted the site's sign-in cookie, so protected `integrity.json` requests failed before controls were installed. The generic resolver fix lives in DigitalCardFramework; this integration consumes it through the existing API.
 
 The companion page now shows loading progress and a retry action after a failed load. Rotation controls remain disabled until initialization succeeds; failure disposes the partial stage and resolver resources. Reloading through Retry recovers after the request failure clears. Artwork, composition, content digests and effects are unchanged.
